@@ -3,7 +3,7 @@ perflint==0.8.1
 
 dynaconf==3.2.6
 fastapi[all]==0.112.0
-jinja2
+jinja2==2.1.5
 uvicorn[standard]==0.30.6
 
 pymongo==4.8.0

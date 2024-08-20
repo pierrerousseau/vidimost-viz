@@ -10,7 +10,7 @@ visualize = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
-templates = Jinja2Templates(directory="app/templates")
+templates = Jinja2Templates(directory="app/front/templates")
 
 @visualize.get("/")
 async def index(request: Request):

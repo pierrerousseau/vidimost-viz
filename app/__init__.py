@@ -10,7 +10,7 @@ app = FastAPI(title="vidimost-viz",
               version="0.0.1")
 app.include_router(visualize)
 
-app.mount("/static", StaticFiles(directory="app/static"), name="static")
+app.mount("/static", StaticFiles(directory="app/front/static"), name="static")
 
 @app.get("/")
 def read_root():

@@ -26,3 +26,8 @@ settings-docker.yaml
 
 # vscode
 *workspace*
+
+# front
+node_modules/
+static/
+package-lock.json
