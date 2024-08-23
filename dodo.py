@@ -1,6 +1,8 @@
 """ Tâches habituelles.
 """
 import os
+import subprocess
+
 
 # Constants
 CONFIG_PATH = "./app/settings"
@@ -48,11 +50,30 @@ def task_lint():
             'verbosity': 0}
 
 
+def task_watch():
+    """ Lance webpack en mode watch
+    """
+    def run_watch():
+        subprocess.run(['npm', 'run', 'watch'], cwd='app/front', check=True)
+    
+    return {
+        'actions': [run_watch],
+        'uptodate': [None],  # Ne pas utiliser la base de données de `doit`
+        'verbosity': 2,
+    }
+
+
 def task_uvicorn():
     """ Lance la version uvicorn de l'application.
     """
-    return {'actions': ["uvicorn app:app --reload"],
-            'verbosity': 2}
+    def run_uvicorn():
+        subprocess.run(['uvicorn', 'app:app', '--reload'], check=True)
+
+    return {
+        'actions': [run_uvicorn],
+        'uptodate': [None],  # Ne pas utiliser la base de données de `doit`
+        'verbosity': 2,
+    }
 
 
 def task_docker_build():
