@@ -1,12 +1,18 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import './styles.scss';
 
-const App = () => (
+import { Timeline } from './components/timeline'
+
+const container = document.getElementById('root'),
+      root = createRoot(container),
+      App = () => (
     <div>
-        <h1>Bienvenue sur ma page React avec FastAPI !</h1>
-        <p>Ceci est une application React servie par FastAPI.</p>
+        <div>
+            <h1>Timeline</h1>
+            <Timeline days={365} />
+        </div>
     </div>
 );
 
-ReactDOM.render(<App />, document.getElementById('root'));
+root.render(<App />);

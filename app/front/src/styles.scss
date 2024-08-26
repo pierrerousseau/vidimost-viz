@@ -8,3 +8,35 @@ body {
 h1 {
     color: #333;
 }
+
+.timeline { 
+    display: flex; 
+    .days {
+        display: flex; 
+        flex-direction: column; 
+        margin-right: 4px; 
+        .day {
+            height: 10px; 
+            font-size: 9px; 
+            margin-bottom: 2px;
+        }
+    }
+    .values {
+        display: flex; 
+        flex-direction: column; 
+        flex-wrap: wrap; 
+        height: 84px; // 7 * 12
+        .empty {
+            width: 10px; 
+            height: 10px; 
+            margin: 1px;
+            background-color: #CCCCCC;
+        }
+        .value {
+            width: 10px;
+            height: 10px;
+            margin: 1px;
+            border-radius: 2px;
+        }
+    }
+}
