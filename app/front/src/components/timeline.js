@@ -1,52 +1,27 @@
 import React from 'react';
-import { format, addDays, parse } from 'date-fns';
+import { getWeek } from 'date-fns';
+
+import { toDate, readableDate, getDay } from '../utils/dates'
 
 export class Timeline extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            contributions: this.generateRandomContributions(),
-        };
     }
 
-    generateRandomContributions() {
-        const { days } = this.props;
-        const contributions = {};
-        for (let i = 0; i < days; i++) {
-            const date = format(addDays(new Date(), i), 'yyyyMMdd');
-            contributions[date] = Math.floor(Math.random() * 5);
-        }
-        return contributions;
-    }
-
-    getColor(contributionCount) {
-        if (contributionCount === 0) return '#ebedf0';
-        if (contributionCount < 2) return '#9be9a8';
-        if (contributionCount < 3) return '#40c463';
-        if (contributionCount < 4) return '#30a14e';
+    getColor(value) {
+        if (value == 0) return '#ebedf0';
+        if (value <= 2) return '#9be9a8';
+        if (value <= 3) return '#40c463';
+        if (value <= 4) return '#30a14e';
 
         return '#216e39';
     }
 
-    toDate(date) {
-        return parse(date, 'yyyyMMdd', new Date());
-    }
-
-    readableDate(date) {
-        return format(this.toDate(date), 'dd/MM/yyyy');
-    }
-
-    getDay(date) {
-        return this.toDate(date).getDay() - 1;
-    }
-
     render() {
-        const { days } = this.props;
-        const { contributions } = this.state;
-        const entries = Object.entries(contributions);
+        const { values } = this.props;
+        const entries    = Object.entries(values);
         const daysOfWeek = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
-        const startDay = this.getDay(entries[0][0]);
+        const startDay   = getDay(entries[0][0]);
 
         return (
             <div className="timeline">
@@ -63,10 +38,90 @@ export class Timeline extends React.Component {
                     ))}
                     {entries.map(([date, value]) => (
                         <div 
-                            key={date} 
+                            key={"value-" + date} 
                             className="value"
-                            title={this.readableDate(date) + " : " + value}
+                            title={readableDate(date) + " : " + value}
                             style={{ backgroundColor: this.getColor(value) }}>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+    }
+}
+
+export class WeeklyAverageTimeline extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            weeklyAverages: {}
+        };
+    }
+
+    calculateWeeklyAverages() {
+        let weeklyAverages = {};
+        const { values }   = this.props;
+        const entries      = Object.entries(values);
+        
+        for (let i = 0; i < entries.length; i++) {
+            const entry = entries[i];
+            const date  = toDate(entry[0]);
+            const value = entry[1];
+            const week  = "" + date.getFullYear() + "." + getWeek(date, {weekStartsOn: 1});
+
+            if (!weeklyAverages[week]) {
+                weeklyAverages[week] = {
+                    total: 0,
+                    count: 0,
+                    average: 0
+                };
+            }
+
+            weeklyAverages[week].total += value
+            weeklyAverages[week].count += 1;
+        }
+
+        Object.keys(weeklyAverages).forEach(week => {
+            weeklyAverages[week].average = 
+                (weeklyAverages[week].total / weeklyAverages[week].count);
+        });
+
+        return weeklyAverages;
+    }
+
+    getColor(averageValue) {
+        if (averageValue == 0) return '#ebedf0';
+        if (averageValue <= 2) return '#c6e48b';
+        if (averageValue <= 3) return '#7bc96f';
+        if (averageValue <= 4) return '#239a3b';
+        return '#196127';
+    }
+
+    render() {
+        const { values } = this.props;
+        const weeks      = ["1", "2", "3", "4"];
+        const averages   = this.calculateWeeklyAverages(values);
+        const entries    = Object.entries(averages);
+
+        console.log("averages", averages)
+
+        return (
+            <div className="weeks-timeline">
+                <div className="weeks">
+                    {weeks.map((week, index) => (
+                        <div key={week} className="week">
+                            {index % 2 === 0 ? week : ''}
+                        </div>
+                    ))}
+                </div>
+                <div className="weeks-averages">
+                    {entries.map(([week, average]) => (
+                        <div 
+                            key={"week-" + week} 
+                            className="week-average"
+                            title={week + " : " + average.average}
+                            style={{ backgroundColor: this.getColor(average.average) }}>
                         </div>
                     ))}
                 </div>

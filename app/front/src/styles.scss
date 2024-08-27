@@ -40,3 +40,34 @@ h1 {
         }
     }
 }
+.weeks-timeline { 
+    display: flex; 
+    .weeks {
+        display: flex; 
+        flex-direction: column; 
+        margin-right: 4px; 
+        .week {
+            height: 10px; 
+            font-size: 9px; 
+            margin-bottom: 2px;
+        }
+    }
+    .weeks-averages {
+        display: flex; 
+        flex-direction: column; 
+        flex-wrap: wrap; 
+        height: 48px; // 4 * 12
+        .empty {
+            width: 10px; 
+            height: 10px; 
+            margin: 1px;
+            background-color: #CCCCCC;
+        }
+        .week-average {
+            width: 10px;
+            height: 10px;
+            margin: 1px;
+            border-radius: 2px;
+        }
+    }
+}
