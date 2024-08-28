@@ -1,7 +1,12 @@
 import React from 'react';
-import { getWeek } from 'date-fns';
 
-import { toDate, readableDate, getDay } from '../utils/dates'
+import { daysNames,
+         monthsNames,
+         readableDate, 
+         getDay, 
+         getWeekNo, 
+         getMonth,
+         getYear } from '../utils/dates'
 
 export class Timeline extends React.Component {
     constructor(props) {
@@ -20,7 +25,7 @@ export class Timeline extends React.Component {
     render() {
         const { values } = this.props;
         const entries    = Object.entries(values);
-        const daysOfWeek = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
+        const daysOfWeek = daysNames;
         const startDay   = getDay(entries[0][0]);
 
         return (
@@ -66,9 +71,9 @@ export class WeeklyAverageTimeline extends React.Component {
         
         for (let i = 0; i < entries.length; i++) {
             const entry = entries[i];
-            const date  = toDate(entry[0]);
+            const date  = entry[0];
             const value = entry[1];
-            const week  = "" + date.getFullYear() + "." + getWeek(date, {weekStartsOn: 1});
+            const week  = "" + getYear(date) + "." + getWeekNo(date);
 
             if (!weeklyAverages[week]) {
                 weeklyAverages[week] = {
@@ -103,8 +108,7 @@ export class WeeklyAverageTimeline extends React.Component {
         const weeks      = ["1", "2", "3", "4"];
         const averages   = this.calculateWeeklyAverages(values);
         const entries    = Object.entries(averages);
-
-        console.log("averages", averages)
+        const nbWeeks    = 52;
 
         return (
             <div className="weeks-timeline">
@@ -116,11 +120,97 @@ export class WeeklyAverageTimeline extends React.Component {
                     ))}
                 </div>
                 <div className="weeks-averages">
+                    {Array.from({ length: nbWeeks }).map((_, index) => (
+                        <div key={`empty-${index}`} className="empty" />
+                    ))}
                     {entries.map(([week, average]) => (
                         <div 
                             key={"week-" + week} 
                             className="week-average"
                             title={week + " : " + average.average}
+                            style={{ backgroundColor: this.getColor(average.average) }}>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+    }
+}
+
+
+export class MonthlyAverageTimeline extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            monthlyAverages: {}
+        };
+    }
+
+    calculateMonthlyAverages() {
+        let monthlyAverages = {};
+        const { values }   = this.props;
+        const entries      = Object.entries(values);
+        
+        for (let i = 0; i < entries.length; i++) {
+            const entry = entries[i];
+            const date  = entry[0];
+            const value = entry[1];
+            const month = "" + getYear(date) + "." + getMonth(date);
+
+            if (!monthlyAverages[month]) {
+                monthlyAverages[month] = {
+                    total: 0,
+                    count: 0,
+                    average: 0
+                };
+            }
+
+            monthlyAverages[month].total += value
+            monthlyAverages[month].count += 1;
+        }
+
+        Object.keys(monthlyAverages).forEach(month => {
+            monthlyAverages[month].average = 
+                (monthlyAverages[month].total / monthlyAverages[month].count);
+        });
+
+        return monthlyAverages;
+    }
+
+    getColor(averageValue) {
+        if (averageValue == 0) return '#ebedf0';
+        if (averageValue <= 2) return '#c6e48b';
+        if (averageValue <= 3) return '#7bc96f';
+        if (averageValue <= 4) return '#239a3b';
+        return '#196127';
+    }
+
+    render() {
+        const { values } = this.props;
+        const months     = monthsNames;
+        const averages   = this.calculateMonthlyAverages(values);
+        const entries    = Object.entries(averages);
+        const startMonth = getMonth(Object.keys(values)[0]) - 1;
+
+        return (
+            <div className="months-timeline">
+                <div className="months">
+                    {months.map((month, index) => (
+                        <div key={month} className="month">
+                            {index % 2 === 0 ? month : ''}
+                        </div>
+                    ))}
+                </div>
+                <div className="months-averages">
+                    {Array.from({ length: startMonth }).map((_, index) => (
+                        <div key={`empty-${index}`} className="empty" />
+                    ))}
+                    {entries.map(([month, average]) => (
+                        <div 
+                            key={"month-" + month} 
+                            className="month-average"
+                            title={month + " : " + average.average}
                             style={{ backgroundColor: this.getColor(average.average) }}>
                         </div>
                     ))}

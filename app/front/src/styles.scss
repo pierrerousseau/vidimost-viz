@@ -40,6 +40,7 @@ h1 {
         }
     }
 }
+
 .weeks-timeline { 
     display: flex; 
     .weeks {
@@ -64,6 +65,38 @@ h1 {
             background-color: #CCCCCC;
         }
         .week-average {
+            width: 10px;
+            height: 10px;
+            margin: 1px;
+            border-radius: 2px;
+        }
+    }
+}
+
+.months-timeline { 
+    display: flex; 
+    .months {
+        display: flex; 
+        flex-direction: column; 
+        margin-right: 4px; 
+        .month {
+            height: 10px; 
+            font-size: 9px; 
+            margin-bottom: 2px;
+        }
+    }
+    .months-averages {
+        display: flex; 
+        flex-direction: column; 
+        flex-wrap: wrap; 
+        height: 144px; // 12 * 12
+        .empty {
+            width: 10px; 
+            height: 10px; 
+            margin: 1px;
+            background-color: #CCCCCC;
+        }
+        .month-average {
             width: 10px;
             height: 10px;
             margin: 1px;

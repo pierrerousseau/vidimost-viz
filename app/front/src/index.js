@@ -4,7 +4,9 @@ import { format, addDays } from 'date-fns';
 
 import './styles.scss';
 
-import { Timeline, WeeklyAverageTimeline } from './components/timeline'
+import { Timeline, 
+         WeeklyAverageTimeline, 
+         MonthlyAverageTimeline } from './components/timeline'
 
 function generateRandomDayValues(days) {
     const values = {};
@@ -30,6 +32,9 @@ const container = document.getElementById('root'),
                 values={values} />
             <br />
             <WeeklyAverageTimeline
+                values={values} />
+            <br />
+            <MonthlyAverageTimeline
                 values={values} />
         </div>
     </div>
