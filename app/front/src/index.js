@@ -20,7 +20,29 @@ function generateRandomDayValues(days) {
     return values;
 }
 
-const values = generateRandomDayValues(365);
+function mergeValues(allValues) {
+    const nbValues = allValues.length;
+    let merged     = {};
+    let setKeys    = new Set();
+
+    for (const values of allValues) {
+        Object.keys(values).forEach(key => setKeys.add(key));
+    }
+
+    for (const key of setKeys) {
+        merged[key] = []
+        for (let i = 0; i < nbValues; i++) {
+            merged[key].push(allValues[i][key]);
+        }
+    }
+
+    return merged;
+}
+
+const values1 = generateRandomDayValues(365);
+const values2 = generateRandomDayValues(365);
+const values3 = generateRandomDayValues(365);
+const values  = mergeValues([values1, values2, values3]);
 
 const container = document.getElementById('root'),
       root = createRoot(container),

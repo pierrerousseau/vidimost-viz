@@ -13,13 +13,34 @@ export class Timeline extends React.Component {
         super(props);
     }
 
-    getColor(value) {
-        if (value == 0) return '#ebedf0';
-        if (value <= 2) return '#9be9a8';
-        if (value <= 3) return '#40c463';
-        if (value <= 4) return '#30a14e';
+    toHex(value) {
+        return value.toString(16).padStart(2, "0");
+    }
 
-        return '#216e39';
+    adjust(component, value) {
+        return Math.min(255, component + value * 20);
+    }
+
+    getColor(value, index = 0) {
+        const baseColors = [
+            {"r": 128, "g": 0,   "b": 0},
+            {"r": 0,   "g": 128, "b": 0},
+            {"r": 0,   "g": 0,   "b": 128},
+        ]
+        const baseValue = Math.floor(value);
+        const color     = baseColors[index % baseColors.length];
+
+        let red   = this.adjust(color.r, baseValue);
+        let green = this.adjust(color.g, baseValue);
+        let blue  = this.adjust(color.b, baseValue);
+
+        let rgb = "#ebedf0";
+
+        if (!!value) {
+            rgb = `#${this.toHex(red)}${this.toHex(green)}${this.toHex(blue)}`;
+        }
+
+        return rgb;
     }
 
     render() {
@@ -41,12 +62,16 @@ export class Timeline extends React.Component {
                     {Array.from({ length: startDay }).map((_, index) => (
                         <div key={`empty-${index}`} className="empty" />
                     ))}
-                    {entries.map(([date, value]) => (
-                        <div 
-                            key={"value-" + date} 
-                            className="value"
-                            title={readableDate(date) + " : " + value}
-                            style={{ backgroundColor: this.getColor(value) }}>
+                    {entries.map(([date, dateValues]) => (
+                        <div className="date-values">
+                            {dateValues.map((value, index) => (
+                                <div 
+                                    key={"value-" + date + "-" + index} 
+                                    className="value"
+                                    title={readableDate(date) + " : " + value}
+                                    style={{ backgroundColor: this.getColor(value, index) }}>
+                                </div>
+                            ))}
                         </div>
                     ))}
                 </div>
