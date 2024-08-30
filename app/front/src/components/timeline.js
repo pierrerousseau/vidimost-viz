@@ -48,6 +48,7 @@ export class Timeline extends React.Component {
         const entries    = Object.entries(values);
         const daysOfWeek = daysNames;
         const startDay   = getDay(entries[0][0]);
+        const nbValues   = entries[0][1].length;
 
         return (
             <div className="timeline">
@@ -60,10 +61,14 @@ export class Timeline extends React.Component {
                 </div>
                 <div className="values">
                     {Array.from({ length: startDay }).map((_, index) => (
-                        <div key={`empty-${index}`} className="empty" />
+                        <div className="date-values" key={"date-values-" + index}>
+                            {Array.from({ length: nbValues }).map((_, index) => (
+                                <div key={`empty-${index}`} className="empty" />
+                            ))}
+                        </div>
                     ))}
                     {entries.map(([date, dateValues]) => (
-                        <div className="date-values">
+                        <div className="date-values" key={"date-values-" + date}>
                             {dateValues.map((value, index) => (
                                 <div 
                                     key={"value-" + date + "-" + index} 

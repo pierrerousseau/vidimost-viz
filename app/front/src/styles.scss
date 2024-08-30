@@ -62,17 +62,21 @@ h1 {
         flex-direction: column; 
         flex-wrap: wrap; 
         height: 48px; // 4 * 12
-        .empty {
-            width: 10px; 
-            height: 10px; 
-            margin: 1px;
-            background-color: #CCCCCC;
-        }
-        .week-average {
-            width: 10px;
-            height: 10px;
-            margin: 1px;
-            border-radius: 2px;
+        .date-values {
+            display: flex;
+            flex-direction: row;
+            .empty {
+                width: 10px; 
+                height: 10px; 
+                margin: 1px;
+                background-color: #CCCCCC;
+            }
+            .week-average {
+                width: 10px;
+                height: 10px;
+                margin: 1px;
+                border-radius: 2px;
+            }
         }
     }
 }
@@ -100,11 +104,15 @@ h1 {
             margin: 1px;
             background-color: #CCCCCC;
         }
-        .month-average {
-            width: 10px;
-            height: 10px;
-            margin: 1px;
-            border-radius: 2px;
+        .date-values {
+            display: flex;
+            flex-direction: row;
+            .month-average {
+                width: 10px;
+                height: 10px;
+                margin: 1px;
+                border-radius: 2px;
+            }
         }
     }
 }
