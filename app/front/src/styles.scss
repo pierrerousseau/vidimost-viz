@@ -26,15 +26,16 @@ h1 {
         flex-direction: column; 
         flex-wrap: wrap; 
         height: 84px; // 7 * 12
-        .empty {
-            width: 10px; 
-            height: 10px; 
-            margin: 1px;
-            background-color: #CCCCCC;
-        }
         .date-values {
             display: flex;
             flex-direction: row;
+            margin-left: .5em;
+            .empty {
+                width: 10px; 
+                height: 10px; 
+                margin: 1px;
+                background-color: #CCCCCC;
+            }
             .value {
                 width: 10px;
                 height: 10px;
@@ -62,9 +63,10 @@ h1 {
         flex-direction: column; 
         flex-wrap: wrap; 
         height: 48px; // 4 * 12
-        .date-values {
+        .week-values {
             display: flex;
             flex-direction: row;
+            margin-left: .5em;
             .empty {
                 width: 10px; 
                 height: 10px; 
@@ -98,15 +100,16 @@ h1 {
         flex-direction: column; 
         flex-wrap: wrap; 
         height: 144px; // 12 * 12
-        .empty {
-            width: 10px; 
-            height: 10px; 
-            margin: 1px;
-            background-color: #CCCCCC;
-        }
-        .date-values {
+        .month-values {
             display: flex;
             flex-direction: row;
+            margin-left: .5em;
+            .empty {
+                width: 10px; 
+                height: 10px; 
+                margin: 1px;
+                background-color: #CCCCCC;
+            }
             .month-average {
                 width: 10px;
                 height: 10px;
