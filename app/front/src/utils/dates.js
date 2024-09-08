@@ -22,7 +22,8 @@ export function readableDate(date) {
 }
 
 export function getDay(date) {
-    return toDate(date).getDay() - 1;
+    // lundi = 0, dimanche = 6
+    return (toDate(date).getDay() + 6) % 7;
 }
 
 export function getWeekNo(date) {

@@ -7,6 +7,7 @@ import './styles.scss';
 import { Timeline, 
          WeeklyAverageTimeline, 
          MonthlyAverageTimeline } from './components/timeline'
+import { LineChartComponent } from './components/chart'
 
 function generateRandomDayValues(days) {
     const values = {};
@@ -22,7 +23,7 @@ function generateRandomDayValues(days) {
 
 function mergeValues(allValues) {
     const nbValues = allValues.length;
-    let merged     = {};
+    let merged     = [];
     let setKeys    = new Set();
 
     for (const values of allValues) {
@@ -30,18 +31,20 @@ function mergeValues(allValues) {
     }
 
     for (const key of setKeys) {
-        merged[key] = []
+        let value = {"date": key}
         for (let i = 0; i < nbValues; i++) {
-            merged[key].push(allValues[i][key]);
+            const subKey = "value_" + i;
+            value[subKey] = allValues[i][key];
         }
+        merged.push(value);
     }
 
     return merged;
 }
 
-const values1 = generateRandomDayValues(365);
-const values2 = generateRandomDayValues(365);
-const values3 = generateRandomDayValues(365);
+const values1 = generateRandomDayValues(36);
+const values2 = generateRandomDayValues(36);
+const values3 = generateRandomDayValues(36);
 const values  = mergeValues([values1, values2, values3]);
 
 const container = document.getElementById('root'),
@@ -53,11 +56,8 @@ const container = document.getElementById('root'),
             <Timeline 
                 values={values} />
             <br />
-            <WeeklyAverageTimeline
-                values={values} />
-            <br />
-            <MonthlyAverageTimeline
-                values={values} />
+            <LineChartComponent data={values} />
+            <hr />
         </div>
     </div>
 );

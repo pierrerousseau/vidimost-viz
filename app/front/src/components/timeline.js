@@ -17,10 +17,11 @@ export class Timeline extends React.Component {
 
     render() {
         const { values } = this.props;
-        const entries    = Object.entries(values);
         const daysOfWeek = daysNames;
-        const startDay   = getDay(entries[0][0]);
-        const nbValues   = entries[0][1].length;
+        const startDay   = getDay(values[0]["date"]);
+        const nbValues   = Object.keys(values[0]).length - 1;
+
+        console.log(startDay, values[0]["date"], nbValues)
 
         return (
             <div className="timeline">
@@ -39,15 +40,15 @@ export class Timeline extends React.Component {
                             ))}
                         </div>
                     ))}
-                    {entries.map(([date, dateValues]) => (
-                        <div className="date-values" key={"date-values-" + date}>
-                            {dateValues.map((value, index) => (
-                                <div 
-                                    key={"value-" + date + "-" + index} 
+                    {values.map((dateValues, index) => (
+                        <div className="date-values" key={"date-values-" + dateValues["date"]}>
+                            {Object.entries(dateValues).map(([key, value], index) => (
+                                key !== "date" ? <div 
+                                    key={"value-" + dateValues["date"] + "-" + index} 
                                     className="value"
-                                    title={readableDate(date) + " : " + value}
+                                    title={readableDate(dateValues["date"]) + " : " + value}
                                     style={{ backgroundColor: getColor(value, index) }}>
-                                </div>
+                                </div> : ""
                             ))}
                         </div>
                     ))}
