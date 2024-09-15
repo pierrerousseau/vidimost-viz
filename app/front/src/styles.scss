@@ -11,11 +11,11 @@ h1 {
 
 .timeline { 
     display: flex; 
-    .days {
+    .rows-titles {
         display: flex; 
         flex-direction: column; 
         margin-right: 4px; 
-        .day {
+        .row-title {
             height: 10px; 
             font-size: 9px; 
             margin-bottom: 2px;
@@ -25,7 +25,15 @@ h1 {
         display: flex; 
         flex-direction: column; 
         flex-wrap: wrap; 
-        height: 84px; // 7 * 12
+        &.days {
+            height: 84px; // 7 * 12
+        }
+        &.weeks {
+            height: 48px; // 4 * 12
+        }
+        &.months {
+            height: 144px; // 12 * 12
+        }
         .date-values {
             display: flex;
             flex-direction: row;
@@ -37,80 +45,6 @@ h1 {
                 background-color: #CCCCCC;
             }
             .value {
-                width: 10px;
-                height: 10px;
-                margin: 1px;
-                border-radius: 2px;
-            }
-        }
-    }
-}
-
-.weeks-timeline { 
-    display: flex; 
-    .weeks {
-        display: flex; 
-        flex-direction: column; 
-        margin-right: 4px; 
-        .week {
-            height: 10px; 
-            font-size: 9px; 
-            margin-bottom: 2px;
-        }
-    }
-    .weeks-averages {
-        display: flex; 
-        flex-direction: column; 
-        flex-wrap: wrap; 
-        height: 48px; // 4 * 12
-        .week-values {
-            display: flex;
-            flex-direction: row;
-            margin-left: .5em;
-            .empty {
-                width: 10px; 
-                height: 10px; 
-                margin: 1px;
-                background-color: #CCCCCC;
-            }
-            .week-average {
-                width: 10px;
-                height: 10px;
-                margin: 1px;
-                border-radius: 2px;
-            }
-        }
-    }
-}
-
-.months-timeline { 
-    display: flex; 
-    .months {
-        display: flex; 
-        flex-direction: column; 
-        margin-right: 4px; 
-        .month {
-            height: 10px; 
-            font-size: 9px; 
-            margin-bottom: 2px;
-        }
-    }
-    .months-averages {
-        display: flex; 
-        flex-direction: column; 
-        flex-wrap: wrap; 
-        height: 144px; // 12 * 12
-        .month-values {
-            display: flex;
-            flex-direction: row;
-            margin-left: .5em;
-            .empty {
-                width: 10px; 
-                height: 10px; 
-                margin: 1px;
-                background-color: #CCCCCC;
-            }
-            .month-average {
                 width: 10px;
                 height: 10px;
                 margin: 1px;

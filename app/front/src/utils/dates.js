@@ -8,9 +8,11 @@ export const daysNames = ["lundi",
                           "samedi", 
                           "dimanche"];
 
+export const weeksNames = ["W1", "W2", "W3", "W4"];
+
 export const monthsNames = ["janvier", "février", "mars", "avril", "mai", "juin",
                             "juillet", "août", "septembre", "octobre",
-                            "novembre", "décembre"]
+                            "novembre", "décembre"];
 
 
 export function toDate(date) {
