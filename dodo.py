@@ -7,6 +7,7 @@ import subprocess
 # Constants
 CONFIG_PATH = "./app/settings"
 SRC_PATH    = "app"
+DOIT_CONFIG = {"backend": "json"}
 # // Constants
 
 

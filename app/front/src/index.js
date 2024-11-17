@@ -94,10 +94,41 @@ function calculateMonthlyAverages(data) {
     return monthlyAverages;
 }
 
-const dayValues1 = generateRandomDayValues(365);
+async function getElements() {
+    const url = "/api/elements/weather"
+
+    return fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            console.log("data", data)
+            return data;
+        })
+        .catch(error => {
+            console.error('Erreur lors de la récupération des données:', error);
+            return {};
+        });
+}
+
+function elementsValues(elements) {
+    let values = {};
+    
+    for (let i = 0; i < elements.length; i++) {
+        const element = elements[i];
+        const date = format(element.date, 'yyyyMMdd');
+
+        values[date] = parseFloat(element.value);
+    };
+
+    return values;
+}
+
+const dayValues1 = elementsValues(await getElements());
 const dayValues2 = generateRandomDayValues(365);
 const dayValues3 = generateRandomDayValues(365);
 const dayValues  = mergeValues([dayValues1, dayValues2, dayValues3]);
+
+console.log("dayValues", dayValues1)
+console.log("generated", dayValues2)
 
 const weekValues1 = calculateWeeklyAverages(dayValues1);
 const weekValues2 = calculateWeeklyAverages(dayValues2);

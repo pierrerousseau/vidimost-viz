@@ -26,7 +26,9 @@ Start
 Launch
 ======
 
+* (optional) source /usr/local/bin/virtualenvwrapper_lazy.sh
+* (optional) workon vidimost-viz
 * doit list
-    * doit --db-file .doit.front.db watch (watch & build frontend)
-    * doit --db-file .doit.serve.db uvicorn
+    * doit watch (watch & build frontend)
+    * doit uvicorn
 * once launched visit : http://localhost:8000
